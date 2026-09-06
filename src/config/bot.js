@@ -2,6 +2,18 @@ import { logger } from '../utils/logger.js';
 
 export const botConfig = {
   // =========================
+  // THE LOUNGE BRAND
+  // =========================
+  // Visual direction: midnight lounge + soft violet neon.
+  brand: {
+    name: "The Lounge",
+    tagline: "Chill • Connect • Enjoy",
+    accent: "#A970FF",
+    accentSoft: "#C39BFF",
+    background: "#0D0A12",
+  },
+
+  // =========================
   // BOT PRESENCE (what users see under the bot name)
   // =========================
   // `status` options:
@@ -23,9 +35,9 @@ export const botConfig = {
     // 5 = Competing
     activities: [
       {
-        name: "Custom Status", // required by Discord API, not shown in the client
-        state: "stalking",     // this is what people actually see
-        type: 4,               // Custom
+        name: "Custom Status",
+        state: "hanging out in The Lounge 🌙",
+        type: 4,
       },
     ],
   },
@@ -35,7 +47,6 @@ export const botConfig = {
   // =========================
   commands: {
     // Bot owner user IDs (comma-separated in OWNER_IDS env var).
-    // Owners can access owner/admin-level bot commands.
     owners: process.env.OWNER_IDS?.split(",").map((id) => id.trim()).filter(Boolean) || [],
 
     // Default wait time between command uses (in seconds).
@@ -44,14 +55,13 @@ export const botConfig = {
     // If true, old commands are removed before re-registering.
     deleteCommands: false,
 
-    // Optional server ID retained for tutorial compatibility; not used for command registration.
+    // Optional server ID retained for tutorial compatibility.
     testGuildId: process.env.TEST_GUILD_ID,
 
     // When true (or MAINTENANCE_MODE=true), only bot owners can run commands.
     maintenanceMode: process.env.MAINTENANCE_MODE === "true",
 
-    // Command prefix for text-based commands (e.g., "!" for "!ping").
-    // Supports both slash commands and prefix commands.
+    // Command prefix for text-based commands.
     prefix: process.env.PREFIX || "!",
   },
 
@@ -61,9 +71,9 @@ export const botConfig = {
   applications: {
     // Default questions shown when someone fills out an application.
     defaultQuestions: [
-      { question: "What is your name?", required: true },
-      { question: "How old are you?", required: true },
-      { question: "Why do you want to join?", required: true },
+      { question: "What should we call you?", required: true },
+      { question: "What brings you to The Lounge?", required: true },
+      { question: "What kind of community experience are you looking for?", required: true },
     ],
 
     // Embed colors by application status.
@@ -83,7 +93,7 @@ export const botConfig = {
     deleteApprovedAfter: 30,
 
     // Role IDs allowed to manage applications.
-    managerRoles: [], // Will be populated from environment or database
+    managerRoles: [],
   },
 
   // =========================
@@ -93,60 +103,66 @@ export const botConfig = {
   embeds: {
     colors: {
       // Main brand colors.
-      primary: "#336699",
-      secondary: "#2F3136",
+      primary: "#A970FF",
+      secondary: "#211A2D",
 
-      // Standard status colors for success/error/warning/info messages.
+      // Standard status colors.
       success: "#57F287",
       error: "#ED4245",
       warning: "#FEE75C",
-      info: "#3498DB",
+      info: "#8B7CFF",
 
       // Neutral utility colors.
       light: "#FFFFFF",
-      dark: "#202225",
-      gray: "#99AAB5",
+      dark: "#0D0A12",
+      gray: "#B8AEC7",
 
       // Discord-style palette shortcuts.
-      blurple: "#5865F2",
+      blurple: "#8B7CFF",
       green: "#57F287",
       yellow: "#FEE75C",
-      fuchsia: "#EB459E",
+      fuchsia: "#D47CFF",
       red: "#ED4245",
       black: "#000000",
 
       // Feature-specific colors.
       giveaway: {
-        active: "#57F287",
+        active: "#A970FF",
         ended: "#ED4245",
       },
+
       ticket: {
         open: "#57F287",
-        claimed: "#FAA61A",
+        claimed: "#C39BFF",
         closed: "#ED4245",
-        pending: "#99AAB5",
+        pending: "#B8AEC7",
       },
-      economy: "#F1C40F",
-      birthday: "#E91E63",
-      moderation: "#9B59B6",
+
+      economy: "#C39BFF",
+      birthday: "#E7A7FF",
+      moderation: "#A970FF",
 
       // Ticket priority color mapping.
       priority: {
-        none: "#95A5A6",
-        low: "#3498db",
-        medium: "#2ecc71",
+        none: "#6F667A",
+        low: "#9D7BFF",
+        medium: "#C39BFF",
         high: "#f1c40f",
-        urgent: "#e74c3c",
+        urgent: "#D47CFF",
       },
     },
+
     footer: {
       // Default footer text used in bot embeds.
-      text: "Titan Bot",
+      text: "The Lounge • Bot",
+
       // Footer icon URL (null = no icon).
       icon: null,
     },
-    // Default thumbnail URL for embeds (null = no thumbnail).
+
+    // Default thumbnail URL for embeds.
     thumbnail: null,
+
     author: {
       // Optional default embed author block.
       name: null,
@@ -161,17 +177,19 @@ export const botConfig = {
   economy: {
     currency: {
       // Currency display name.
-      name: "coins",
+      name: "lounge points",
+
       // Plural display name.
-      namePlural: "coins",
+      namePlural: "lounge points",
+
       // Currency symbol shown in balances.
-      symbol: "$",
+      symbol: "✦",
     },
 
     // Starting balance for new users.
     startingBalance: 0,
 
-    // Maximum bank amount before upgrades (if upgrades are used).
+    // Maximum bank amount before upgrades.
     baseBankCapacity: 100000,
 
     // Daily reward amount.
@@ -185,7 +203,7 @@ export const botConfig = {
     begMin: 5,
     begMax: 50,
 
-    // Command cooldowns (milliseconds).
+    // Command cooldowns.
     cooldowns: {
       daily: 24 * 60 * 60 * 1000,
       work: 60 * 60 * 1000,
@@ -193,18 +211,16 @@ export const botConfig = {
       rob: 4 * 60 * 60 * 1000,
     },
 
-    // Chance to succeed when robbing (0.4 = 40%).
+    // Chance to succeed when robbing.
     robSuccessRate: 0.4,
 
-    // Jail time after failed rob (milliseconds).
-    // 3600000 = 1 hour.
+    // Jail time after failed rob.
     robFailJailTime: 3600000,
   },
 
   // =========================
   // SHOP SETTINGS
   // =========================
-  // Add shop defaults here when needed.
   shop: {
 
   },
@@ -213,7 +229,7 @@ export const botConfig = {
   // TICKET SYSTEM
   // =========================
   tickets: {
-    // Category ID where new tickets are created (null = no forced category).
+    // Category ID where new tickets are created.
     defaultCategory: null,
 
     // Role IDs allowed to manage/support tickets.
@@ -223,27 +239,31 @@ export const botConfig = {
     priorities: {
       none: {
         emoji: "⚪",
-        color: "#95A5A6",
+        color: "#6F667A",
         label: "None",
       },
+
       low: {
         emoji: "🟢",
-        color: "#2ECC71",
+        color: "#9D7BFF",
         label: "Low",
       },
+
       medium: {
         emoji: "🟡",
-        color: "#F1C40F",
+        color: "#C39BFF",
         label: "Medium",
       },
+
       high: {
         emoji: "🔴",
-        color: "#E74C3C",
+        color: "#f1c40f",
         label: "High",
       },
+
       urgent: {
         emoji: "🚨",
-        color: "#E91E63",
+        color: "#D47CFF",
         label: "Urgent",
       },
     },
@@ -262,18 +282,15 @@ export const botConfig = {
   // GIVEAWAY SETTINGS
   // =========================
   giveaways: {
-    // Default giveaway duration in milliseconds.
-    // 86400000 = 24 hours.
+    // Default giveaway duration.
     defaultDuration: 86400000,
 
     // Allowed winner count range.
     minimumWinners: 1,
     maximumWinners: 10,
 
-    // Allowed giveaway duration range in milliseconds.
-    // 300000 = 5 minutes.
+    // Allowed giveaway duration range.
     minimumDuration: 300000,
-    // 2592000000 = 30 days.
     maximumDuration: 2592000000,
 
     // Role IDs allowed to host giveaways.
@@ -302,65 +319,57 @@ export const botConfig = {
   // =========================
   verification: {
     // Message shown when posting the verification panel.
-    defaultMessage: "Click the button below to verify yourself and gain access to the server!",
+    defaultMessage:
+      "🌙 Welcome to **The Lounge**. Click below to verify and settle into the community.",
 
     // Text on the verification button.
-    defaultButtonText: "Verify",
+    defaultButtonText: "Enter The Lounge",
 
     // Automatic verification behavior.
     autoVerify: {
-      // How automatic verification decides who is auto-approved:
-      // - "none"        = everyone is auto-verified immediately
-      // - "account_age" = account must be older than set days
-      // - "server_size" = auto-verify everyone only in smaller servers
       defaultCriteria: "none",
 
-      // Days used when `defaultCriteria` is `account_age`.
       defaultAccountAgeDays: 7,
 
-      // Member count threshold used when `defaultCriteria` is `server_size`.
-      // Example: 1000 means auto-verify if server has fewer than 1000 members.
       serverSizeThreshold: 1000,
 
-      // Allowed safety limits for account-age requirements.
-      // 1 = minimum day, 365 = maximum days.
       minAccountAge: 1,
       maxAccountAge: 365,
 
-      // If true, user receives a DM after verification.
       sendDMNotification: true,
 
-      // Human-readable descriptions for each criteria mode.
       criteria: {
         account_age: "Account must be older than specified days",
         server_size: "All users if server has less than 1000 members",
-        none: "All users immediately"
-      }
+        none: "All users immediately",
+      },
     },
 
-    // Minimum time between verification attempts (milliseconds).
-    // 5000 = 5 seconds.
+    // Minimum time between verification attempts.
     verificationCooldown: 5000,
 
-    // Maximum failed attempts allowed inside the time window below.
+    // Maximum failed attempts allowed inside the time window.
     maxVerificationAttempts: 3,
 
-    // Time window for counting attempts (milliseconds).
-    // 60000 = 1 minute.
+    // Time window for counting attempts.
     attemptWindow: 60000,
 
-    // In-memory safety limits (helps avoid unbounded memory growth).
+    // In-memory safety limits.
     maxCooldownEntries: 10000,
     maxAttemptEntries: 10000,
-    // Cleanup frequency for cooldown/attempt maps (milliseconds).
-    // 300000 = 5 minutes.
+
+    // Cleanup frequency.
     cooldownCleanupInterval: 300000,
-    // Maximum metadata payload size for audit entries (bytes).
+
+    // Maximum metadata payload size for audit entries.
     maxAuditMetadataBytes: 4096,
+
     // Maximum number of audit entries kept in memory.
     maxInMemoryAuditEntries: 1000,
+
     // If true, log every verification action.
     logAllVerifications: true,
+
     // If true, preserve verification audit history.
     keepAuditTrail: true,
   },
@@ -372,13 +381,16 @@ export const botConfig = {
     // Welcome template posted when a user joins.
     // Placeholders: {user}, {server}, {memberCount}
     defaultWelcomeMessage:
-      "Welcome {user} to {server}! We now have {memberCount} members!",
+      "🌙 Welcome {user} to **{server}** — grab a seat and make yourself at home. We're now **{memberCount}** members strong.",
+
     // Goodbye template posted when a user leaves.
     // Placeholders: {user}, {memberCount}
     defaultGoodbyeMessage:
-      "{user} has left the server. We now have {memberCount} members.",
+      "🌙 {user} quietly slipped out of **{server}**. We're now **{memberCount}** members.",
+
     // Channel ID for welcome messages.
     defaultWelcomeChannel: null,
+
     // Channel ID for goodbye messages.
     defaultGoodbyeChannel: null,
   },
@@ -391,36 +403,39 @@ export const botConfig = {
       // Default naming/description templates for counter entries.
       name: "{name} Counter",
       description: "Server {name} counter",
-      // Channel type used for counters (typically "voice").
+
+      // Channel type used for counters.
       type: "voice",
-      // Channel name format. `{count}` is replaced automatically.
+
+      // Channel name format.
       channelName: "{name}-{count}",
     },
+
     permissions: {
-      // Default denied permissions for the counter channel.
       deny: ["VIEW_CHANNEL"],
-      // Default allowed permissions for the counter channel.
       allow: ["VIEW_CHANNEL", "CONNECT", "SPEAK"],
     },
+
     messages: {
-      // Default response messages for counter actions.
-      created: "✅ Created counter **{name}**",
-      deleted: "🗑️ Deleted counter **{name}**",
-      updated: "🔄 Updated counter **{name}**",
+      created: "🌙 Created the **{name}** lounge counter.",
+      deleted: "🌙 Removed the **{name}** lounge counter.",
+      updated: "✨ Updated the **{name}** lounge counter.",
     },
+
     types: {
-      // Built-in counter types and how each count is calculated.
       members: {
         name: "👥 Members",
         description: "Total members in the server",
         getCount: (guild) => guild.memberCount.toString(),
       },
+
       bots: {
         name: "🤖 Bots",
         description: "Total bot accounts in the server",
         getCount: (guild) =>
           guild.members.cache.filter((m) => m.user.bot).size.toString(),
       },
+
       members_only: {
         name: "👤 Humans",
         description: "Total human members (non-bots)",
@@ -434,19 +449,28 @@ export const botConfig = {
   // GENERIC BOT MESSAGES
   // =========================
   messages: {
-    noPermission: "You do not have permission to use this command.",
-    cooldownActive: "Please wait {time} before using this command again.",
-    errorOccurred: "An error occurred while executing this command.",
+    noPermission:
+      "🌙 You don't have permission to use that here.",
+
+    cooldownActive:
+      "☕ Take a breather — try again in **{time}**.",
+
+    errorOccurred:
+      "🌙 Something went wrong behind the scenes. Please try again.",
+
     missingPermissions:
-      "I am missing required permissions to perform this action.",
-    commandDisabled: "This command has been disabled.",
-    maintenanceMode: "The bot is currently in maintenance mode.",
+      "🌙 I'm missing a permission needed for that.",
+
+    commandDisabled:
+      "🌙 That feature is currently taking a break.",
+
+    maintenanceMode:
+      "🌙 The Lounge is currently getting a little maintenance. Please check back soon.",
   },
 
   // =========================
   // FEATURE TOGGLES
   // =========================
-  // Set any feature to `false` to disable it globally.
   features: {
     // Core systems.
     economy: true,
@@ -491,27 +515,40 @@ export function validateConfig(config) {
   }
 
   if (!process.env.DISCORD_TOKEN && !process.env.TOKEN) {
-    errors.push("Bot token is required (DISCORD_TOKEN or TOKEN environment variable)");
+    errors.push(
+      "Bot token is required (DISCORD_TOKEN or TOKEN environment variable)"
+    );
   }
 
   if (!process.env.CLIENT_ID) {
-    errors.push("Client ID is required (CLIENT_ID environment variable)");
+    errors.push(
+      "Client ID is required (CLIENT_ID environment variable)"
+    );
   }
 
   if (process.env.NODE_ENV === 'production') {
-    // A full connection URL (DATABASE_URL / POSTGRES_URL) satisfies all Postgres
-    // requirements, matching how src/config/database/postgres.js resolves the pool config.
-    const hasConnectionUrl = Boolean(process.env.POSTGRES_URL || process.env.DATABASE_URL);
+    // A full connection URL satisfies all Postgres requirements.
+    const hasConnectionUrl = Boolean(
+      process.env.POSTGRES_URL || process.env.DATABASE_URL
+    );
 
     if (!hasConnectionUrl) {
       if (!process.env.POSTGRES_HOST) {
-        errors.push("PostgreSQL connection is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_HOST)");
+        errors.push(
+          "PostgreSQL connection is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_HOST)"
+        );
       }
+
       if (!process.env.POSTGRES_USER) {
-        errors.push("PostgreSQL user is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_USER)");
+        errors.push(
+          "PostgreSQL user is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_USER)"
+        );
       }
+
       if (!process.env.POSTGRES_PASSWORD) {
-        errors.push("PostgreSQL password is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_PASSWORD)");
+        errors.push(
+          "PostgreSQL password is required in production (set DATABASE_URL/POSTGRES_URL, or POSTGRES_PASSWORD)"
+        );
       }
     }
   }
@@ -520,8 +557,13 @@ export function validateConfig(config) {
 }
 
 const configErrors = validateConfig(botConfig);
+
 if (configErrors.length > 0) {
-  logger.error("Bot configuration errors:", configErrors.join("\n"));
+  logger.error(
+    "Bot configuration errors:",
+    configErrors.join("\n")
+  );
+
   if (process.env.NODE_ENV === "production") {
     process.exit(1);
   }
@@ -551,7 +593,10 @@ const COMMAND_CATEGORY_FEATURE_MAP = {
 };
 
 function normalizeCategoryKey(category) {
-  return String(category || "").trim().toLowerCase().replace(/\s+/g, "_");
+  return String(category || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_");
 }
 
 export function getCommandPrefix() {
@@ -580,7 +625,10 @@ export function getBotMessage(key, replacements = {}) {
   let message = botConfig.messages?.[key] || key;
 
   for (const [placeholder, value] of Object.entries(replacements)) {
-    message = message.replace(new RegExp(`\\{${placeholder}\\}`, "g"), String(value));
+    message = message.replace(
+      new RegExp(`\\{${placeholder}\\}`, "g"),
+      String(value)
+    );
   }
 
   return message;
@@ -602,6 +650,7 @@ export function isCommandCategoryEnabled(category) {
   }
 
   const featureKey = COMMAND_CATEGORY_FEATURE_MAP[normalized];
+
   if (!featureKey) {
     return true;
   }
@@ -612,40 +661,67 @@ export function isCommandCategoryEnabled(category) {
 export function getApplicationStatusColor(status) {
   const colors = botConfig.applications?.statusColors || {};
   const hex = colors[status];
-  return hex ? getColor(hex) : getColor(status === "approved" ? "success" : status === "denied" ? "error" : "warning");
+
+  return hex
+    ? getColor(hex)
+    : getColor(
+        status === "approved"
+          ? "success"
+          : status === "denied"
+            ? "error"
+            : "warning"
+      );
 }
 
 export function getDefaultApplicationQuestions() {
-  return (botConfig.applications?.defaultQuestions || []).map((entry) =>
-    typeof entry === "string" ? entry : entry.question,
-  ).filter(Boolean);
+  return (botConfig.applications?.defaultQuestions || [])
+    .map((entry) =>
+      typeof entry === "string" ? entry : entry.question
+    )
+    .filter(Boolean);
 }
 
 export function getColor(path, fallback = "#99AAB5") {
-  
-  if (typeof path === "number") return path;
-  if (typeof path === "string" && path.startsWith("#")) {
-    
+  if (typeof path === "number") {
+    return path;
+  }
+
+  if (
+    typeof path === "string" &&
+    path.startsWith("#")
+  ) {
     return parseInt(path.replace("#", ""), 16);
   }
+
   const result = path
     .split(".")
     .reduce(
-      (obj, key) => (obj && obj[key] !== undefined ? obj[key] : fallback),
-      botConfig.embeds.colors,
+      (obj, key) =>
+        obj && obj[key] !== undefined ? obj[key] : fallback,
+      botConfig.embeds.colors
     );
-  
-  if (typeof result === "string" && result.startsWith("#")) {
+
+  if (
+    typeof result === "string" &&
+    result.startsWith("#")
+  ) {
     return parseInt(result.replace("#", ""), 16);
   }
+
   return result;
 }
 
 export function getRandomColor() {
-  const colors = Object.values(botConfig.embeds.colors).flatMap((color) =>
-    typeof color === "string" ? color : Object.values(color),
+  const colors = Object.values(botConfig.embeds.colors).flatMap(
+    (color) =>
+      typeof color === "string"
+        ? color
+        : Object.values(color)
   );
-  return colors[Math.floor(Math.random() * colors.length)];
+
+  return colors[
+    Math.floor(Math.random() * colors.length)
+  ];
 }
 
 export default botConfig;
