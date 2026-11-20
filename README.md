@@ -237,7 +237,3 @@ Lounge Assistant is released under the MIT License. See [LICENSE](LICENSE) for d
 ## Thank You
 
 Thank you for choosing Lounge Assistant for your Discord server. Contributions and feedback are welcome.
-"""
-p = Path("/mnt/data/README.md")
-p.write_text(readme, encoding="utf-8")
-print(f"Created {p} ({len(readme.splitlines())} lines)")
