@@ -1,6 +1,6 @@
-# Contributing to Lounge-Assistant
+# Contributing to Lounge Assistant
 
-Thank you for your interest in contributing to Lounge-Assistant! This guide covers local setup, project conventions, and what we look for in pull requests.
+Thank you for your interest in contributing to **Lounge Assistant**! This guide covers local setup, project conventions, and what we look for in pull requests.
 
 ## Ways to Contribute
 
@@ -8,7 +8,7 @@ Thank you for your interest in contributing to Lounge-Assistant! This guide cove
 - New commands or enhancements to existing features
 - Documentation updates
 
-Before starting large features, open an issue or discuss in the [support server](https://discord.gg/6CUr48C8hS) so we can align on scope and avoid duplicate work.
+Before starting large features, open an issue or discuss them in the [support server](https://discord.gg/6CUr48C8hS) so we can align on scope and avoid duplicate work.
 
 ## Getting Started
 
@@ -22,19 +22,27 @@ Before starting large features, open an issue or discuss in the [support server]
 
 1. Fork and clone the repository.
 2. Install dependencies:
+
    ```bash
    npm install
    ```
+
 3. Copy the environment file and configure it:
+
    ```bash
    cp .env.example .env
    ```
+
    At minimum, set `DISCORD_TOKEN`, `CLIENT_ID`, and `GUILD_ID` for single-server development. See [README.md](README.md#manual-installation-steps) for full configuration options.
+
 4. Verify your database setup (when using PostgreSQL):
+
    ```bash
    npm run migrate:check
    ```
+
 5. Start the bot:
+
    ```bash
    npm start
    ```
@@ -55,12 +63,12 @@ Use descriptive branch names, for example:
 
 ## Database & Migrations
 
-TitanBot uses PostgreSQL as its primary store. If PostgreSQL is unreachable at startup, the bot can operate in a **degraded in-memory mode** — but that mode is not suitable for production and should not be the only way you test persistence-related changes.
+Lounge Assistant uses PostgreSQL as its primary store. If PostgreSQL is unreachable at startup, the bot can operate in a **degraded in-memory mode** — but that mode is not suitable for production and should not be the only way you test persistence-related changes.
 
 Useful commands:
 
 | Command | Purpose |
-| --- | --- |
+|---|---|
 | `npm run migrate` | Apply migrations |
 | `npm run migrate:check` | Verify schema version matches expectations |
 | `npm run migrate:status` | Show current migration status |
@@ -75,9 +83,9 @@ Test features that read or write guild data with **both** PostgreSQL and the mem
 - **Handle errors gracefully** — catch failures, log with context, and send user-friendly embed replies where appropriate.
 - **Avoid breaking guild isolation** — guild-specific config and data must stay scoped per server (`guild:{guildId}:...` keys, `interaction.guildId`).
 - **Keep changes minimal** — prefer extending existing utilities and services over duplicating logic.
-- **Document user-facing behavior** — update README.md when setup steps or configuration change; mention new env vars in `.env.example`.
+- **Document user-facing behavior** — update README.md when setup steps or configuration change; mention new environment variables in `.env.example`.
 
-There is no ESLint config in this repo today; consistency with surrounding code is the main bar.
+There is no ESLint config in this repository today; consistency with surrounding code is the main bar.
 
 ## Pull Request Checklist
 
@@ -85,7 +93,7 @@ In your PR description, include:
 
 - **What** changed
 - **Why** the change is needed
-- **How to test** it manually (commands, config, or env vars to set)
+- **How to test** it manually (commands, configuration, or environment variables to set)
 
 ## Reporting Issues
 
@@ -95,7 +103,7 @@ When reporting a bug, include:
 - Expected vs. actual behavior
 - Relevant logs (`LOG_LEVEL=debug` can help locally)
 - Whether you use PostgreSQL or memory fallback
-- Bot version / commit hash if known
+- Bot version / commit hash, if known
 
 ## License
 
