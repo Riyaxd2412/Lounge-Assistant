@@ -1,5 +1,4 @@
-from pathlib import Path
-readme = """# Lounge Assistant - Discord Bot
+
 
 **Lounge Assistant** is a feature-rich Discord bot designed to enhance your server experience with moderation tools, economy features, utility commands, community engagement systems, and more. Built with Discord.js v14 and PostgreSQL for reliable performance and data persistence.
 
